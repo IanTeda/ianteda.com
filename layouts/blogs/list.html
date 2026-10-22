@@ -1,0 +1,18 @@
+{{ define "main" }}
+{{- /* Blogs index also lists Letters to my Sons and the Engineering Rule Book. */ -}}
+{{ $pages := where site.RegularPages "Section" "in" (slice "blogs" "letters-to-my-sons" "engineering-rule-book") }}
+<main id="main">
+  <h1>{{ .Title }}</h1>
+  <p class="count">{{ len $pages }} entries</p>
+  {{ .Content }}
+  {{ range $pages.GroupByDate "2006" }}
+  <h2>{{ .Key }}</h2>
+  <ul class="post-list">
+    {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="rt">{{ .ReadingTime }} min</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></li>
+    {{ end }}
+  </ul>
+  {{ end }}
+</main>
+{{ partial "footer.html" . }}
+{{ end }}
