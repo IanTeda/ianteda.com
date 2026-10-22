@@ -30,9 +30,6 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
-      HUGO_ENVIRONMENT: production
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -55,6 +52,9 @@ jobs:
           restore-keys: hugo-${{ hashFiles('mise.toml') }}-
 
       - name: Build with Hugo
+        env:
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+          HUGO_ENVIRONMENT: production
         run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Upload artifact
