@@ -16,11 +16,17 @@
     {{ end }}
   </ul>
   <h2>Sections</h2>
-  <ul class="section-list">
-    {{ range where site.Sections "Section" "ne" "page" }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="count">{{ len .RegularPages }} files</span></li>
-    {{ end }}
-  </ul>
+  {{ $secs := where site.Sections "Section" "ne" "page" }}
+  <div class="ls">
+    <p class="prompt">ls -l ~/</p>
+    <p class="total">total {{ len $secs }}</p>
+    <ul class="section-list">
+      {{ range $secs }}
+      {{ $latest := index (.RegularPages.ByDate.Reverse) 0 }}
+      <li><span class="perm" aria-hidden="true">drwxr-xr-x</span> <span class="count">{{ len .RegularPages }} <span class="unit">posts</span></span> <span class="owner" aria-hidden="true">ian</span> {{ with $latest }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan _2 2006" }}</time>{{ else }}<span></span>{{ end }} <a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Section }}/</a></li>
+      {{ end }}
+    </ul>
+  </div>
 </main>
 {{ partial "footer.html" . }}
 {{ end }}

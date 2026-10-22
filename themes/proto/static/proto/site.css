@@ -75,10 +75,25 @@ main > .count { margin-bottom: 24px; }
   .post-list li { flex-direction: row; gap: 16px; align-items: baseline; }
 }
 
-.section-list { list-style: none; padding: 0; margin: 0 0 32px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
-.section-list li { border: 1px solid #30363d; border-radius: 6px; padding: 10px 14px; }
-.section-list a { color: #58a6ff; text-decoration: none; font-weight: 700; }
-.section-list a::before { content: "drwxr-xr-x "; color: #484f58; font-weight: 400; font-size: 0.75rem; }
+/* sections render as `ls -l` output: perms, files, owner, last post, name */
+.ls { border: 1px solid #30363d; border-radius: 6px; background: #161b22; padding: 12px 14px; margin: 16px 0 32px; font-size: 0.875rem; overflow-x: auto; }
+.ls p { margin: 0; }
+.ls .prompt { color: #3fb950; }
+.ls .prompt::before { content: "~$ "; }
+.ls .total { color: #8b949e; }
+.section-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, auto); justify-content: start; column-gap: 1.5ch; white-space: nowrap; }
+.section-list li { display: contents; }
+.section-list .perm, .section-list .owner { color: #6e7681; }
+.section-list .count { display: inline; color: #c9d1d9; font-size: inherit; text-align: right; }
+.section-list .unit { color: #6e7681; }
+.section-list time { font-size: inherit; white-space: pre; }
+.section-list a { color: #58a6ff; font-weight: 700; text-decoration: none; }
+.section-list a:hover { text-decoration: underline; }
+/* mobile: drop owner column so the listing fits */
+@media (max-width: 39.99em) {
+  .section-list { grid-template-columns: repeat(4, auto); }
+  .section-list .owner { display: none; }
+}
 
 /* article: spans the chrome width, matching the home page */
 article { padding-bottom: 32px; overflow-wrap: anywhere; }
