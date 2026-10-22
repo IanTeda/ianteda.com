@@ -9,6 +9,17 @@
     {{ with .Params.cover }}<figure><img src="{{ .image }}" alt="{{ .caption }}">{{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end }}
     {{ .Content }}
   </article>
+  {{ with site.Params.social }}
+  <h2>Contact</h2>
+  <div class="ls">
+    <p class="prompt">cat ~/.contact</p>
+    <dl class="contact-list">
+      {{ with .email }}<dt>email</dt><dd><a href="mailto:{{ . }}">{{ . }}</a></dd>{{ end }}
+      {{ with .github }}<dt>github</dt><dd><a href="https://github.com/{{ . }}" rel="me">github.com/{{ . }}</a></dd>{{ end }}
+      {{ with .linkedin }}<dt>linkedin</dt><dd><a href="https://www.linkedin.com/{{ . }}" rel="me">linkedin.com/{{ strings.TrimSuffix "/" . }}</a></dd>{{ end }}
+    </dl>
+  </div>
+  {{ end }}
   <h2>Recent</h2>
   <ul class="post-list">
     {{ range first 10 (where site.RegularPages "Section" "in" (slice "blogs" "notes")) }}

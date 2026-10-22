@@ -246,3 +246,11 @@ article th, article td { border: 1px solid var(--border); padding: 6px 10px; }
 .tag-cloud .w2 { font-size: 0.9375rem; }
 .tag-cloud .w3 { font-size: 1.125rem; }
 .tag-cloud .w4 { font-size: 1.375rem; font-weight: 700; }
+
+/* contact: key/value pairs like a dotfile */
+.contact-list { display: grid; grid-template-columns: auto 1fr; column-gap: 2ch; margin: 8px 0 0; }
+.contact-list dt { color: var(--purple); }
+.contact-list dt::after { content: ":"; color: var(--faint); }
+.contact-list dd { margin: 0; overflow-wrap: anywhere; }
+.contact-list a { text-decoration: none; }
+.contact-list a:hover { text-decoration: underline; }
