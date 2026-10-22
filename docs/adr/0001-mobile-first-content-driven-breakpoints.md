@@ -12,3 +12,4 @@ The redesign is written mobile-first: the unqueried CSS is the layout for a 320p
 - The tier names (mobile/tablet/desktop) are only labels for width ranges. Nothing detects devices.
 - Page layout uses media queries. Container queries are only for components that appear at several widths.
 - The desktop tier changes chrome only. A sidebar or table of contents beside the article would be a new decision.
+- Exception: the home page intro (the text and cover photo above the recent list) is not held to the measure. It spans the full chrome width so it lines up with the post list below it. On desktop that is about 110 characters per line, which we accept on this one page because a matching layout matters more there. Posts keep the measure.

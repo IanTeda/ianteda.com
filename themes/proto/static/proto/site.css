@@ -76,6 +76,9 @@ main > .count { margin-bottom: 24px; }
 /* article: held to the measure */
 article, .pager { max-width: 65ch; margin-inline: auto; }
 article { padding-bottom: 32px; overflow-wrap: anywhere; }
+/* home page intro spans the chrome width, matching the post list below it */
+article.about { max-width: none; margin-inline: 0; }
+.about > blockquote:first-child { margin-top: 0; }
 article a { text-decoration-style: dotted; text-underline-offset: 3px; }
 article h2 { font-size: 20px; text-transform: none; }
 article h3 { color: #d2a8ff; font-size: 17px; }
@@ -128,6 +131,7 @@ article th, article td { border: 1px solid #30363d; padding: 6px 10px; }
   .term label { font-size: inherit; }
 
   article img { width: auto; max-width: 100%; margin-inline: 0; border-inline: 1px solid #30363d; }
+  .about img { width: 100%; border-radius: 6px; }
   pre { margin-inline: 0; border-inline: 1px solid #30363d; border-radius: 6px; padding-inline: 14px; }
 
   .pager { flex-direction: row; justify-content: space-between; }

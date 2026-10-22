@@ -5,6 +5,10 @@
   <p>{{ site.Params.info.description }}</p>
 </header>
 <main>
+  <article class="about">
+    {{ with .Params.cover }}<figure><img src="{{ .image }}" alt="{{ .caption }}">{{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end }}
+    {{ .Content }}
+  </article>
   <h2>recent</h2>
   <ul class="post-list">
     {{ range first 10 (where site.RegularPages "Section" "in" (slice "blogs" "notes")) }}
