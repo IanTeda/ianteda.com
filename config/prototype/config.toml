@@ -1,0 +1,11 @@
+# PROTOTYPE: run with `hugo server -e prototype`. Throwaway; see themes/proto.
+theme = "proto"
+baseURL = "/"
+canonifyURLs = false
+googleAnalytics = ""
+
+[markup.highlight]
+style = "github-dark"
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3

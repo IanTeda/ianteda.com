@@ -1,0 +1,19 @@
+{{ define "main" }}
+<main>
+  <article>
+    <h1>{{ .Title }}</h1>
+    {{ partial "meta.html" . }}
+    {{ if and (gt .WordCount 600) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}
+    <details class="toc" open><summary>contents</summary>{{ .TableOfContents }}</details>
+    {{ end }}
+    {{ .Content }}
+  </article>
+  {{ if or .PrevInSection .NextInSection }}
+  <nav class="pager">
+    {{ with .NextInSection }}<a class="prev" href="{{ .RelPermalink }}">&larr; {{ .Title }}</a>{{ end }}
+    {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }} &rarr;</a>{{ end }}
+  </nav>
+  {{ end }}
+</main>
+{{ partial "footer.html" . }}
+{{ end }}

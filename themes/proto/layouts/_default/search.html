@@ -1,0 +1,82 @@
+{{ define "main" }}
+<main class="search">
+  <h1>{{ .Title }}</h1>
+  <form class="term" role="search" onsubmit="return false">
+    <label for="q"><span class="ps1">~$</span> grep -ri</label>
+    <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="query" autofocus>
+  </form>
+  <p class="count" id="status" aria-live="polite">loading index…</p>
+  <ul class="results post-list" id="results"></ul>
+  <p class="hint">press <kbd>/</kbd> to focus · <kbd>↑</kbd><kbd>↓</kbd> to move · <kbd>enter</kbd> to open</p>
+</main>
+{{ partial "footer.html" . }}
+<script>
+(function () {
+  var q = document.getElementById('q'), out = document.getElementById('results'), status = document.getElementById('status');
+  var index = [], sel = -1;
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function mark(s, terms) {
+    s = esc(s);
+    terms.forEach(function (t) { s = s.replace(new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark>$1</mark>'); });
+    return s;
+  }
+  function snippet(text, term) {
+    var i = text.toLowerCase().indexOf(term);
+    if (i < 0) return text.slice(0, 140);
+    var start = Math.max(0, i - 60);
+    return (start ? '…' : '') + text.slice(start, i + 80) + '…';
+  }
+  function run() {
+    var raw = q.value.trim().toLowerCase();
+    var u = new URL(location.href);
+    raw ? u.searchParams.set('q', raw) : u.searchParams.delete('q');
+    history.replaceState(null, '', u);
+    out.innerHTML = ''; sel = -1;
+    if (!raw) { status.textContent = index.length + ' files indexed'; return; }
+    var terms = raw.split(/\s+/);
+    var hits = index.map(function (p) {
+      var title = p.title.toLowerCase(), tags = p.tags.join(' ').toLowerCase(), body = p.content.toLowerCase();
+      var score = 0;
+      for (var i = 0; i < terms.length; i++) {
+        var t = terms[i], s = 0;
+        if (title.indexOf(t) >= 0) s += 10;
+        if (tags.indexOf(t) >= 0) s += 5;
+        if (body.indexOf(t) >= 0) s += 1;
+        if (!s) return null;
+        score += s;
+      }
+      return { p: p, score: score };
+    }).filter(Boolean).sort(function (a, b) { return b.score - a.score || (a.p.date < b.p.date ? 1 : -1); });
+    status.textContent = hits.length + (hits.length === 1 ? ' match' : ' matches');
+    out.innerHTML = hits.slice(0, 50).map(function (h) {
+      return '<li><a href="' + h.p.url + '">' + mark(h.p.title, terms) + '</a>' +
+        '<span class="section">' + esc(h.p.section) + '</span><time>' + h.p.date + '</time>' +
+        '<p class="snip">' + mark(snippet(h.p.content, terms[0]), terms) + '</p></li>';
+    }).join('');
+  }
+  function move(d) {
+    var items = out.querySelectorAll('li');
+    if (!items.length) return;
+    if (sel >= 0) items[sel].classList.remove('sel');
+    sel = (sel + d + items.length) % items.length;
+    items[sel].classList.add('sel');
+    items[sel].scrollIntoView({ block: 'nearest' });
+  }
+  q.addEventListener('input', run);
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+    else if (e.key === 'Enter' && sel >= 0) { location.href = out.querySelectorAll('li a')[sel].href; }
+    else if (e.key === 'Escape') { q.value = ''; run(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+  });
+  fetch('{{ (.OutputFormats.Get "json").RelPermalink }}').then(function (r) { return r.json(); }).then(function (d) {
+    index = d;
+    q.value = new URLSearchParams(location.search).get('q') || '';
+    run();
+  }).catch(function () { status.textContent = 'error: could not load search index'; });
+})();
+</script>
+{{ end }}

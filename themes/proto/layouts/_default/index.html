@@ -1,0 +1,22 @@
+{{ define "main" }}
+<header class="site-header">
+  <p class="prompt">whoami</p>
+  <h1>{{ site.Title }}</h1>
+  <p>{{ site.Params.info.description }}</p>
+</header>
+<main>
+  <h2>recent</h2>
+  <ul class="post-list">
+    {{ range first 10 (where site.RegularPages "Section" "in" (slice "blogs" "notes")) }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="section">{{ .Section }}</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time></li>
+    {{ end }}
+  </ul>
+  <h2>sections</h2>
+  <ul class="section-list">
+    {{ range where site.Sections "Section" "ne" "page" }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="count">{{ len .RegularPages }} files</span></li>
+    {{ end }}
+  </ul>
+</main>
+{{ partial "footer.html" . }}
+{{ end }}

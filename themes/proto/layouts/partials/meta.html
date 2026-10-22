@@ -1,0 +1,7 @@
+{{- /* One-line post metadata: date, section, reading time, tags. */ -}}
+<p class="meta">
+  {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
+  <span class="section">{{ .Section }}</span>
+  <span class="rt">{{ .ReadingTime }} min</span>
+  {{ with .Params.tags }}<span class="tags">{{ range . }}<a href="{{ (printf "/tags/%s/" (. | urlize)) }}">#{{ . }}</a>{{ end }}</span>{{ end }}
+</p>

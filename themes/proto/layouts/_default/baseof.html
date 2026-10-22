@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{{- /* PROTOTYPE redesign of ianteda.com (dev console look). */ -}}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} • {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.info.description }}{{ end }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="/proto/site.css">
+</head>
+<body>
+  <nav class="site-nav"><a class="brand" href="/">{{ site.Title }}</a><span class="nav-links">{{ range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}</span>{{ if ne .Layout "search" }}<form class="nav-search" action="/search/" method="get" role="search"><label for="nav-q"><span class="ps1">$</span> grep</label><input id="nav-q" name="q" type="search" placeholder="search… (/)" autocomplete="off" spellcheck="false"></form>{{ end }}</nav>
+  <script>
+    (function () {
+      var f = document.querySelector('.nav-search');
+      if (!f) return;
+      var q = f.querySelector('#nav-q');
+      f.addEventListener('submit', function (e) {
+        if (!q.value.trim()) e.preventDefault();
+      });
+      document.addEventListener('keydown', function (e) {
+        var t = e.target;
+        if (e.key !== '/' || (t.closest && t.closest('input, textarea, select, [contenteditable]'))) return;
+        e.preventDefault(); q.focus();
+      });
+    })();
+  </script>
+  {{ block "main" . }}{{ end }}
+</body>
+</html>
