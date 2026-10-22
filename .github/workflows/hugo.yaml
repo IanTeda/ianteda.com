@@ -42,7 +42,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.111.3'
+          hugo-version: '0.168.0'
           extended: true
 
       - name: Install Node.js dependencies

@@ -5,10 +5,7 @@ copyright = ""
 
 theme = "minimo"
 
-disqusShortname = ""
-googleAnalytics = "G-XWMR2J8526"
 
-Paginate = 10
 preserveTaxonomyNames = true
 
 enableRobotsTXT = true # generate robots.txt
@@ -44,8 +41,22 @@ hrefTargetBlank = true
 # edit this block for your own language
 [languages.en]
 lang = "en"
-languageName = "English"
+label = "English"
 weight = 1
+
+[pagination]
+pagerSize = 10
+
+[services.disqus]
+shortname = ""
+
+[services.googleAnalytics]
+id = "G-XWMR2J8526"
+
+# The embedded link render hook (on by default for multilingual configs) rejects
+# legacy footnote-style links like [[3:1]]([3:1]) in older posts.
+[markup.goldmark.renderHooks.link]
+useEmbedded = "never"
 
 [sitemap]
 changefreq = "weekly"
