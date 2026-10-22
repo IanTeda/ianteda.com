@@ -3,7 +3,7 @@ title = "Ian Teda"
 # for smart copyright line, leave this blank and check [params.copyright]
 copyright = ""
 
-theme = "minimo"
+theme = "proto"
 
 
 preserveTaxonomyNames = true
@@ -19,7 +19,7 @@ enableEmoji = true
 defaultContentLanguage = "en"
 
 # Enable to turn relative URLs into absolute.
-canonifyURLs = true
+canonifyURLs = false
 # Enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
 # relativeURLs = true
 
@@ -62,3 +62,9 @@ useEmbedded = "never"
 changefreq = "weekly"
 filename = "sitemap.xml"
 priority = 0.5
+
+[markup.highlight]
+style = "github-dark"
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3

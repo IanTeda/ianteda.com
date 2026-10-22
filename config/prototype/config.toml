@@ -1,11 +1,4 @@
-# PROTOTYPE: run with `hugo server -e prototype`. Throwaway; see themes/proto.
-theme = "proto"
+# Local preview: `hugo server -e prototype`. Proto is now the production theme;
+# this only swaps in a relative baseURL and disables analytics.
 baseURL = "/"
-canonifyURLs = false
 googleAnalytics = ""
-
-[markup.highlight]
-style = "github-dark"
-[markup.tableOfContents]
-startLevel = 2
-endLevel = 3
