@@ -1,10 +1,10 @@
 {{ define "main" }}
-<header class="site-header">
+<header class="site-header home">
   <p class="prompt">whoami</p>
   <h1>{{ site.Title }}</h1>
   <p>{{ site.Params.info.description }}</p>
 </header>
-<main id="main">
+<main id="main" class="home">
   <article class="about">
     {{ with .Params.cover }}<figure><img src="{{ .image }}" alt="{{ .caption }}">{{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end }}
     {{ .Content }}
