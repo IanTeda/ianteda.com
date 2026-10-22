@@ -1,3 +1,3 @@
 [tools]
-# Keep in sync with hugo-version in .github/workflows/hugo.yaml
+# Keep in sync with CI: .github/workflows/build-and-deploy.yaml reads this file via mise-action
 "aqua:gohugoio/hugo/hugo-extended" = "0.168.0"

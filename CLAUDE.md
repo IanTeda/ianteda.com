@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Hugo static site for www.ianteda.com (personal blog/notes), using the [Minimo](https://github.com/MunifTanjim/minimo) theme as a git submodule at `themes/minimo` (clone with `--recurse-submodules`). Deployed to GitHub Pages by `.github/workflows/hugo.yaml` on every push to `main`.
+Hugo static site for www.ianteda.com (personal blog/notes), using the [Minimo](https://github.com/MunifTanjim/minimo) theme as a git submodule at `themes/minimo` (clone with `--recurse-submodules`). Deployed to GitHub Pages by `.github/workflows/build-and-deploy.yaml` on every push to `main`.
 
 ## Commands
 
@@ -14,7 +14,7 @@ hugo --gc --minify                              # production build (what CI runs
 npm ci && npx gulp                              # regenerate cover images
 ```
 
-- CI pins **Hugo extended 0.168.0** (pinned for local use in `mise.toml`; keep both in sync).
+- Hugo extended 0.168.0 is pinned in `mise.toml`, the single source of truth: CI installs it from there via `jdx/mise-action`.
 - There are no tests or linters (`npm test` is a stub).
 - `gulp` (default task `coverImage`) resizes/crops every `src/cover-images/*.{jpg,png}` to 1200x562, compresses, and writes PNGs to `static/images/covers/`. Put source photos in `src/cover-images/` and reference the output as `/images/covers/cover-<name>.png`. Other `gulpfile.mjs` tasks are commented out.
 

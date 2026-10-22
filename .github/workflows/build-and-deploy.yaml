@@ -1,0 +1,74 @@
+#-- .github/workflows/build-and-deploy.yaml
+# Builds the Hugo site and deploys it to GitHub Pages on every push to main
+# (or when run manually).
+#
+# The Hugo version comes from mise.toml, so local and CI builds always match.
+# configure-pages supplies the Pages base URL, which Hugo uses as --baseURL.
+# The concurrency group stops two deployments from running at the same time.
+
+name: Build and Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+      HUGO_ENVIRONMENT: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 0 # full history for .GitInfo / .Lastmod
+
+      - name: Install Hugo (version from mise.toml)
+        uses: jdx/mise-action@v5
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Cache Hugo modules and resources
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ hashFiles('mise.toml') }}-${{ github.run_id }}
+          restore-keys: hugo-${{ hashFiles('mise.toml') }}-
+
+      - name: Build with Hugo
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
