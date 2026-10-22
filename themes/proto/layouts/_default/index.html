@@ -27,6 +27,19 @@
       {{ end }}
     </ul>
   </div>
+  <h2>Tags</h2>
+  {{ with site.Taxonomies.tags }}
+  {{ $max := (index .ByCount 0).Count }}
+  <div class="ls">
+    <p class="prompt">tags --count</p>
+    <ul class="tag-cloud">
+      {{ range .Alphabetical }}
+      {{ $w := math.Min 4 (add 1 (int (math.Ceil (div (mul 3.0 (math.Log .Count)) (math.Log (math.Max 2 $max)))))) }}
+      <li class="w{{ $w }}"><a href="{{ .Page.RelPermalink }}">#{{ .Page.Title | lower }}</a><span class="count">{{ .Count }}</span></li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
 </main>
 {{ partial "footer.html" . }}
 {{ end }}

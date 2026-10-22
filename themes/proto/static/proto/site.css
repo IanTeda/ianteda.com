@@ -234,3 +234,15 @@ article th, article td { border: 1px solid var(--border); padding: 6px 10px; }
   .nav-search { grid-column: 2; grid-row: 1; }
   .nav-links { grid-column: 3; justify-content: flex-end; flex-wrap: nowrap; }
 }
+
+/* tag cloud: size steps w1-w4 scale with post count */
+.tag-cloud { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 4px 2ch; line-height: 1.4; }
+.tag-cloud a { color: var(--blue); text-decoration: none; }
+.tag-cloud a:hover { text-decoration: underline; }
+.tag-cloud li { white-space: nowrap; }
+.tag-cloud .count { display: inline; color: var(--dim); font-size: 0.75rem; margin-left: 0.5ch; }
+.tag-cloud .w1 { font-size: 0.8125rem; }
+.tag-cloud .w1 a { color: var(--muted); }
+.tag-cloud .w2 { font-size: 0.9375rem; }
+.tag-cloud .w3 { font-size: 1.125rem; }
+.tag-cloud .w4 { font-size: 1.375rem; font-weight: 700; }
