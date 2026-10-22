@@ -9,12 +9,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <script>try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="stylesheet" href="/proto/site.css">
 </head>
 <body>
   <a class="skip" href="#main">skip to content</a>
-  <nav class="site-nav"><a class="brand" href="/">{{ site.Title }}</a><span class="nav-links">{{ $cur := . }}{{ range site.Menus.main }}<a href="{{ .URL }}"{{ if or ($cur.IsMenuCurrent "main" .) ($cur.HasMenuCurrent "main" .) (eq $cur.RelPermalink .URL) (and .Page (eq $cur.Section .Page.Section) (ne $cur.Section "")) }} aria-current="page"{{ end }}>{{ .Name }}</a>{{ end }}</span>{{ if ne .Layout "search" }}<form class="nav-search" action="/search/" method="get" role="search"><label for="nav-q"><span class="ps1">$</span> grep</label><input id="nav-q" name="q" type="search" placeholder="search… (/)" autocomplete="off" spellcheck="false"></form>{{ end }}</nav>
+  <nav class="site-nav"><a class="brand" href="/">{{ site.Title }}</a><span class="nav-links">{{ $cur := . }}{{ range site.Menus.main }}<a href="{{ .URL }}"{{ if or ($cur.IsMenuCurrent "main" .) ($cur.HasMenuCurrent "main" .) (eq $cur.RelPermalink .URL) (and .Page (eq $cur.Section .Page.Section) (ne $cur.Section "")) }} aria-current="page"{{ end }}>{{ .Name }}</a>{{ end }}<button class="theme-toggle" type="button" aria-label="toggle colour theme" hidden></button></span>{{ if ne .Layout "search" }}<form class="nav-search" action="/search/" method="get" role="search"><label for="nav-q"><span class="ps1">$</span> grep</label><input id="nav-q" name="q" type="search" placeholder="search… (/)" autocomplete="off" spellcheck="false"></form>{{ end }}</nav>
   <script>
+    (function () {
+      var b = document.querySelector('.theme-toggle'), root = document.documentElement;
+      var sys = matchMedia('(prefers-color-scheme: light)');
+      function cur() { return root.dataset.theme || (sys.matches ? 'light' : 'dark'); }
+      function label() { b.textContent = cur() === 'dark' ? '[light]' : '[dark]'; }
+      b.hidden = false; label();
+      sys.addEventListener('change', label);
+      b.addEventListener('click', function () {
+        var t = cur() === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = t;
+        try { localStorage.setItem('theme', t); } catch (e) {}
+        label();
+      });
+    })();
     (function () {
       var f = document.querySelector('.nav-search');
       if (!f) return;
