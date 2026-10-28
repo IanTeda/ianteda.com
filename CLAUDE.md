@@ -37,3 +37,7 @@ Issues are local markdown files under `.scratch/<feature>/`. See `docs/agents/is
 ### Domain docs
 
 Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Atlas (drafting posts)
+
+Atlas (`~/Projects/Atlas`) is Ian's private knowledge base. When asked to draft a post from what Atlas knows, follow `docs/agents/atlas.md`. Read Atlas only, never write to it, and never put private material into a post: this site and its repo are public.
