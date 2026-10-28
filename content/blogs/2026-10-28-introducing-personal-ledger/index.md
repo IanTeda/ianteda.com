@@ -102,4 +102,4 @@ That has changed how I work. The product requirements document, the glossary of 
 
 More to come on this later.
 
-If you want to follow along, or tell me why my approach to tracking money is wrong, the code is on GitHub.
+If you want to follow along, or tell me why my approach to tracking money is wrong, the code is on [GitHub](https://github.com/IanTeda/Personal-Ledger).
