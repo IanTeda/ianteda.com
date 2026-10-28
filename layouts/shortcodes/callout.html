@@ -1,0 +1,4 @@
+<aside class="callout">
+  {{- with .Get "image" }}<img src="{{ . }}" alt="{{ $.Get "alt" }}">{{ end }}
+  <div>{{ .Inner | markdownify }}</div>
+</aside>

@@ -178,7 +178,11 @@ blockquote { margin: 0; padding-left: 16px; border-left: 2px solid var(--green);
 /* mobile: images and code run to the screen edge, losing their side borders */
 article figure { margin: 0 0 1em; }
 article figcaption { color: var(--muted); font-size: 0.8125rem; }
+article .header-image { margin-bottom: 32px; }
 article img { display: block; height: auto; box-sizing: border-box; width: calc(100% + 32px); max-width: none; margin-inline: -16px; border: 1px solid var(--border); border-inline: 0; }
+/* callout: boxed aside with an optional small image, e.g. a project logo */
+article .callout { display: flex; gap: 16px; align-items: center; margin: 0 0 1em; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-family: var(--prose); line-height: 1.55; }
+article .callout img { flex: none; width: 56px; max-width: 56px; height: 56px; margin: 0; border: 0; border-radius: 4px; }
 pre { background: var(--surface); border: 1px solid var(--border); border-inline: 0; padding: 14px 16px; overflow-x: auto; font-size: 0.8125rem; margin-inline: -16px; }
 article pre { position: relative; }
 article table { border-collapse: collapse; display: block; overflow-x: auto; font-size: 0.8125rem; }
