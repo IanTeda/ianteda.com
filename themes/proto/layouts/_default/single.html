@@ -3,6 +3,13 @@
   <article>
     <h1>{{ .Title }}</h1>
     {{ partial "meta.html" . }}
+    {{/* header image: only a cover that is a resource in the page bundle; older posts' /images/covers paths are skipped */}}
+    {{ with .Params.cover }}{{ with $.Resources.GetMatch .image }}
+    <figure class="header-image">
+      <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="{{ or $.Params.cover.alt $.Params.cover.caption }}">
+      {{ with $.Params.cover.caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+    </figure>
+    {{ end }}{{ end }}
     {{ if and (gt .WordCount 600) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}
     <details class="toc" open><summary>contents</summary>{{ .TableOfContents }}</details>
     {{ end }}

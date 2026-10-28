@@ -25,13 +25,18 @@ draft: false
 # Template specific - Minimo Theme
 toc: true
 cover:
-  image: /images/covers/cover-locks.png
-  caption: "Your data, your lock"
+  image: personal-ledger-transactions.png
+  caption: "The Personal Ledger transactions screen, filtered to groceries"
+  alt: "Personal Ledger transactions screen: a sidebar of ledger sections, filter chips, and a table of grocery transactions with a running total"
   style: full
 ---
 I have tried many personal finance tools and systems over the years. Some were outdated, some had confusing interfaces, and some were built around a way of tracking money that didn’t match how I think about it. Almost all of them wanted my financial data to live on someone else’s server.
 
 So I am building my own. It is called Personal Ledger, and this post covers why it exists, what I want it to become, and how I plan to get there.
+
+{{< callout image="personal-ledger-logo.png" alt="Personal Ledger logo" >}}
+**Personal Ledger** is a local-first app for tracking spending, budgets and accounts. The code is on [GitHub](https://github.com/IanTeda/Personal-Ledger).
+{{< /callout >}}
 
 ## Why build another finance app?
 
