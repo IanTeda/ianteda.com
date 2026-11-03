@@ -1,0 +1,104 @@
+{{- /* Animated mockup of keyboard navigation in the Personal Ledger desktop app, styled after its UI. Usage: {{< keyboard-mockup caption="..." >}} */ -}}
+<figure class="kbm">
+  <style>
+    .kbm { --bg:#f2f2f2; --side:#e9e9e9; --fg:#1d1d1b; --muted:#8a8a8a; --line:#c9c9c9; --ink:#1f1f1d; --red:#ee3a1c; margin:2rem 0; }
+    .kbm-win { background:var(--bg); color:var(--fg); border:1px solid var(--line); overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.18); font:13px/1.35 "Archivo","Helvetica Neue",Arial,sans-serif; }
+    .kbm-top { display:flex; align-items:center; gap:10px; padding:8px 12px; border-bottom:2px solid var(--line); }
+    .kbm-top b { font-weight:700; }
+    .kbm-top small { color:var(--muted); }
+    .kbm-cmd { margin-left:auto; border:1px solid var(--line); padding:2px 8px; font-size:11px; }
+    .kbm-body { display:grid; grid-template-columns:150px 1fr; }
+    .kbm-side { background:var(--side); border-right:2px solid var(--line); padding:8px 0; }
+    .kbm-side h6 { margin:4px 12px; font-size:9px; letter-spacing:.12em; color:var(--muted); }
+    .kbm-nav { display:flex; justify-content:space-between; padding:6px 12px; transition:background .15s,color .15s; }
+    .kbm-nav em { font-style:normal; font-size:10px; color:var(--muted); letter-spacing:.2em; }
+    .kbm-nav.on { background:var(--ink); color:#fff; font-weight:700; }
+    .kbm-main { min-width:0; }
+    .kbm-head { display:flex; align-items:flex-start; padding:12px 16px 8px; gap:10px; }
+    .kbm-head h5 { margin:0; font-size:22px; font-weight:700; }
+    .kbm-head p { margin:2px 0 0; font-size:10px; color:var(--muted); }
+    .kbm-add { margin-left:auto; background:var(--red); color:#fff; font-weight:700; padding:6px 10px; white-space:nowrap; outline:2px solid transparent; outline-offset:2px; transition:outline-color .15s; }
+    .kbm-add.on { outline-color:var(--ink); }
+    .kbm-search { margin:0 16px 8px auto; width:180px; border:1px solid var(--line); background:#ececec; padding:4px 8px; color:var(--muted); font-size:11px; transition:border-color .15s; }
+    .kbm-search.on { border-color:var(--ink); color:var(--fg); }
+    .kbm-row { display:grid; grid-template-columns:18px 56px 1fr 80px 70px; gap:6px; padding:7px 16px; border-top:1px solid #dcdcdc; white-space:nowrap; font-variant-numeric:tabular-nums; transition:background .15s,color .15s; }
+    .kbm-row span:last-child { text-align:right; }
+    .kbm-row.h { font-size:9px; letter-spacing:.12em; color:var(--muted); border-top:2px solid var(--line); font-weight:700; }
+    .kbm-row.on { background:var(--ink); color:#fff; font-weight:700; }
+    .kbm-new { display:none; }
+    .kbm-new.show { display:grid; }
+    .kbm-status { display:flex; align-items:center; gap:10px; padding:5px 12px; border-top:2px solid var(--line); background:var(--side); font-size:11px; }
+    .kbm-mode { background:var(--ink); color:#fff; font-weight:700; font-size:10px; letter-spacing:.1em; padding:2px 8px; }
+    .kbm-mode.ins { background:var(--red); }
+    .kbm-key { font-weight:700; font-family:ui-monospace,monospace; font-size:13px; border:1px solid var(--line); border-bottom-width:3px; background:#fff; padding:0 6px; }
+    .kbm-msg { color:#555; }
+    .kbm figcaption { margin-top:.5rem; font-size:.9em; opacity:.7; text-align:center; }
+    @media (max-width:560px) {
+      .kbm-body { grid-template-columns:1fr; }
+      .kbm-side { display:none; }
+      .kbm-row { grid-template-columns:14px 48px 1fr 64px; }
+      .kbm-row span:nth-child(4) { display:none; }
+    }
+  </style>
+  <div class="kbm-win" role="img" aria-label="Mockup of the Personal Ledger desktop app driven from the keyboard: jumping to Transactions, stepping through rows, filtering and adding a transaction">
+    <div class="kbm-top"><span>▯</span><b>Personal Ledger</b><small>transactions</small><span class="kbm-cmd"><b>:</b> run a command</span></div>
+    <div class="kbm-body">
+      <nav class="kbm-side">
+        <h6>LEDGER</h6>
+        <div class="kbm-nav" data-k="gd">Dashboard<em>gd</em></div>
+        <div class="kbm-nav" data-k="gl">Transactions<em>gl</em></div>
+        <div class="kbm-nav" data-k="ga">Accounts<em>ga</em></div>
+        <div class="kbm-nav">Payees<em>gp</em></div>
+        <h6>PLAN</h6>
+        <div class="kbm-nav">Budgets<em>gb</em></div>
+        <div class="kbm-nav">Reports<em>gr</em></div>
+      </nav>
+      <div class="kbm-main">
+        <div class="kbm-head"><div><h5>Transactions</h5><p>1,248 transactions across 7 accounts</p></div><span class="kbm-add" data-k="a">add transaction&nbsp; a</span></div>
+        <div class="kbm-search" data-k="f">/ search payee or memo</div>
+        <div class="kbm-row h"><span></span><span>DATE</span><span>PAYEE</span><span>CATEGORY</span><span>AMOUNT</span></div>
+        <div class="kbm-row kbm-new" data-k="n"><span>○</span><span>03 nov</span><span>▍</span><span></span><span></span></div>
+        <div class="kbm-row" data-k="r0"><span>○</span><span>12 sep</span><span>Woolworths Metro</span><span>groceries</span><span>−86.40</span></div>
+        <div class="kbm-row" data-k="r1"><span>●</span><span>08 sep</span><span>Coles Online</span><span>groceries</span><span>−184.22</span></div>
+        <div class="kbm-row" data-k="r2"><span>●</span><span>05 sep</span><span>IGA Express</span><span>groceries</span><span>−41.90</span></div>
+        <div class="kbm-row" data-k="r3"><span>●</span><span>01 sep</span><span>Woolworths Metro</span><span>groceries</span><span>−63.15</span></div>
+      </div>
+    </div>
+    <div class="kbm-status"><span class="kbm-mode">NORMAL</span><span class="kbm-key">gd</span><span class="kbm-msg">go to dashboard</span></div>
+  </div>
+  {{- with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+  <script>
+  (function () {
+    var root = document.currentScript.closest('.kbm');
+    // [key, description, highlighted element, mode]
+    var steps = [
+      ['gd', 'go to dashboard', 'gd', 'NORMAL'],
+      ['gl', 'go to transactions', 'gl', 'NORMAL'],
+      ['j', 'next row', 'r0', 'NORMAL'],
+      ['j', 'next row', 'r1', 'NORMAL'],
+      ['j', 'next row', 'r2', 'NORMAL'],
+      ['k', 'previous row', 'r1', 'NORMAL'],
+      ['/', 'filter', 'f', 'INSERT'],
+      ['esc', 'back to the list', 'r1', 'NORMAL'],
+      ['a', 'add transaction', 'a', 'NORMAL'],
+      ['tab', 'next field', 'n', 'INSERT'],
+      ['enter', 'save', 'r0', 'NORMAL']
+    ];
+    var key = root.querySelector('.kbm-key'), msg = root.querySelector('.kbm-msg'),
+        mode = root.querySelector('.kbm-mode'), row = root.querySelector('.kbm-new'),
+        nav = root.querySelector('[data-k="gl"]'), i = 0;
+    function show() {
+      var s = steps[i];
+      root.querySelectorAll('.on').forEach(function (e) { e.classList.remove('on'); });
+      root.querySelector('[data-k="' + s[2] + '"]').classList.add('on');
+      if (i > 1) nav.classList.add('on');
+      row.classList.toggle('show', s[2] === 'n');
+      key.textContent = s[0]; msg.textContent = s[1];
+      mode.textContent = s[3]; mode.classList.toggle('ins', s[3] === 'INSERT');
+    }
+    show();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setInterval(function () { i = (i + 1) % steps.length; show(); }, 1400);
+  })();
+  </script>
+</figure>
