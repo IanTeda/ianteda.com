@@ -18,11 +18,11 @@ tags:
 draft: false
 # Template specific - Minimo Theme
 toc: true
-# cover:
-#   image: TODO.png
-#   caption: "TODO"
-#   alt: "TODO"
-#   style: full
+cover:
+  image: personal-ledger-keyboard.png
+  caption: "Type, Tab, type, Enter: the keys that do most of the work in Personal Ledger"
+  alt: "Illustration of a keyboard with the Esc, Tab, Enter and arrow keys highlighted in black"
+  style: full
 ---
 In my experience, data management and navigation are a big part of working in a financial app: importing transactions, updating and categorising them, and ticking them off against a bank statement. It is repetitive work, and every time your hand leaves the keyboard to find the mouse, it gets a little slower and a little more tedious.
 
