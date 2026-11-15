@@ -17,8 +17,9 @@
   </article>
   {{ if or .PrevInSection .NextInSection }}
   <nav class="pager">
-    {{ with .NextInSection }}<a class="prev" href="{{ .RelPermalink }}">&larr; {{ .Title }}</a>{{ end }}
-    {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }} &rarr;</a>{{ end }}
+    {{/* Hugo's PrevInSection is the older post, NextInSection the newer one */}}
+    {{ with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}">&larr; {{ .Title }}</a>{{ end }}
+    {{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }} &rarr;</a>{{ end }}
   </nav>
   {{ end }}
 </main>
