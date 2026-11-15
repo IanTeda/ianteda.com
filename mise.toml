@@ -1,3 +1,7 @@
 [tools]
 # Keep in sync with CI: .github/workflows/build-and-deploy.yaml reads this file via mise-action
 "aqua:gohugoio/hugo/hugo-extended" = "0.168.0"
+
+[env]
+# Hugo's default cache (~/.cache) is not writable in the agent sandbox
+HUGO_CACHEDIR = "{{config_root}}/.cache/hugo"

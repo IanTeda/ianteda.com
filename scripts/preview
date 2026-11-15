@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Screenshot a post (drafts and future-dated included) at desktop and phone width.
+# Usage: scripts/preview <slug>
+# Prints two PNG paths, downscaled to <=1000px wide so reading them back is cheap.
+# Builds static files with relative URLs and strips Google Fonts, because headless
+# Chromium hangs against `hugo server` and on the font request.
+set -euo pipefail
+slug="${1:?usage: scripts/preview <slug>}"
+cd "$(git rev-parse --show-toplevel)"
+export HUGO_CACHEDIR="${HUGO_CACHEDIR:-$PWD/.cache/hugo}"
+work="${TMPDIR:-/tmp}/ianteda-preview"
+site="$work/site"
+rm -rf "$site"; mkdir -p "$work"
+
+HUGO_RELATIVEURLS=true hugo --buildDrafts --buildFuture --quiet -d "$site" >/dev/null
+page=$(find "$site" -path "*/$slug/index.html" | head -1)
+[[ -n "$page" ]] || { echo "preview: no page with slug '$slug'" >&2; exit 1; }
+sed -i -E 's#<link[^>]*fonts\.(googleapis|gstatic)[^>]*>##g' "$page"
+
+for spec in 1280x1500 390x1400; do
+  w=${spec%x*}; h=${spec#*x}; png="$work/$slug-$w.png"
+  timeout 30 chromium --headless=new --no-sandbox --disable-gpu \
+    --user-data-dir="$work/chromium" --window-size="$w,$h" --hide-scrollbars \
+    --screenshot="$png" "file://$page" >/dev/null 2>&1
+  magick "$png" -resize '1000x>' "$png"
+  echo "$png"
+done

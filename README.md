@@ -1,39 +1,23 @@
-# hugo.ianteda.com
+# ianteda.com
 
-Hugo static website for www.ianteda.com
-
-
-## Run Hugo development server
-
-cd into the site folder
+Hugo source for www.ianteda.com. Theme: `themes/proto`.
 
 ```bash
-hugo server --noHTTPCache --disableFastRender  
+git config core.hooksPath .githooks             # once per clone: run scripts/check before each commit
+hugo server --noHTTPCache --disableFastRender   # dev server
+scripts/check                                   # build + front-matter lint
+scripts/preview <slug>                          # screenshot a post
+scripts/publish [content/<section>/<bundle>]    # merge drafts into main and deploy
 ```
 
-## Demo a Hugo Theme
+See `CLAUDE.md` for the branch model and content conventions.
 
-cd in theme example dir
-
-```bash
-cd theme/awesome/exampleSite
-```
-
-Run hugo server with theme
-
-```bash
-hugo serve  --themesDir ../..
-```
-
-## Figure Short Code
+## Figure shortcode
 
 ```md
-{{< 
-    figure src="image-bundle-name.jpg"  link="http://link-to-follow" 
-    attr="Figure Title" class="align-center" attrlink="http://link to follow" 
->}}
+{{< figure src="image-in-bundle.jpg" link="https://..." attr="Figure title" class="align-center" attrlink="https://..." >}}
 ```
 
-## Theme
+## Legacy photo covers
 
-* [Minimo Theme](https://github.com/MunifTanjim/minimo)
+Posts before 2026 reference `/images/covers/cover-*.png`, produced from `src/cover-images/` by `npm ci && npx gulp`. The proto theme does not display them; new covers live in the post bundle.

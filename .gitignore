@@ -26,3 +26,5 @@ hugo.linux
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+# Hugo cache (mise.toml [env] HUGO_CACHEDIR)
+/.cache/
