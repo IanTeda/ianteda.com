@@ -25,7 +25,7 @@ cover:
   alt: "A black and white photo of a Gaboon viper's head, turned towards the letters V, I, P, E and R, listing View, Interactor, Presenter, Entity and Router."
   style: full
 ---
-[Personal Ledger]({{< ref "/blogs/2026-10-28-introducing-personal-ledger" >}}) has been written with the assistance of AI. That reinforces, not change, what I want from an architecture. I still want code that is easy to read, test and change, but I also want code that an assistant can pick up cold just like you would with a code base worked on by a big team, change in one place, and hand back to me in a shape I can review quickly.
+[Personal Ledger]({{< ref "/blogs/2026-10-28-introducing-personal-ledger" >}}) has been written with the assistance of AI. That reinforces, not changes, what I want from an architecture. I still want code that is easy to read, test and change, but I also want code that an assistant can pick up cold just like you would with a code base worked on by a big team, change in one place, and hand back to me in a shape I can review quickly.
 
 Early on, the app was heading the usual way: a few big files that knew about everything. The screens drew the data, worked out the rules, saved to the database and decided where to go next. Every change touched one of those files, and every change got a little harder. So I moved Personal Ledger to an architecture called VIPER. This post covers what VIPER is, why I think it is a good fit for most apps, and why it is an even better fit when an AI is writing a lot of the code.
 
