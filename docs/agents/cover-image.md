@@ -8,13 +8,27 @@ Read one of these before drafting; they are the style source of truth:
 
 - `content/blogs/2026-11-10-building-personal-ledger-with-ai/ai-assistant-roles.svg` (diagram)
 - `content/blogs/2026-11-03-personal-ledger-keyboard-navigation/personal-ledger-keyboard.svg` (product mockup)
+- `content/blogs/2026-11-17-personal-ledger-viper/personal-ledger-viper-cover.svg` (photo with legend)
 
 The rules they share:
 
 - Hand-written SVG, `viewBox="0 0 1200 562"`, rendered at 2x to a 2400×1124 PNG.
-- `font-family="Archivo, 'Liberation Sans', 'Helvetica Neue', Arial, sans-serif"`. Archivo is not installed locally, so renders use Liberation Sans. Check the PNG for text overflow.
-- Background `#f2f2f2` or `#fff`, ink `#1d1d1b`, greys `#5a5a5a` `#8a8a8a` `#c4c4c4`. At most one accent, red `#ee3a1c`.
-- Flat, editorial, monochrome: boxes, keys, arrows, a few words. No gradients, no shadows, no photos.
+- `font-family="Archivo, 'Liberation Sans', 'Helvetica Neue', Arial, sans-serif"`. Archivo is not installed system-wide: render with the real font (see Rendering with Archivo), not the Liberation Sans fallback. Check the PNG for text overflow.
+- Background `#f2f2f2` or `#fff`, ink `#1d1d1b`, greys `#5a5a5a` `#8a8a8a` `#c4c4c4`. At most one accent: the site's green `#1a7f37` (light-theme `--green` in `themes/proto/static/proto/site.css`), or red `#ee3a1c` to match the older diagrams.
+- Flat, editorial, monochrome: boxes, keys, arrows, a few words. No gradients, no shadows.
+- Photos only when Ian asks for one: greyscale, public domain or CC-licensed (Wikimedia Commons is a good source), embedded in the SVG as base64 so the file stands alone, and credited in the cover `caption` (photographer, source, licence) even when public domain.
+
+## Rendering with Archivo
+
+Download Archivo into `$TMPDIR` once and point fontconfig at it for every `rsvg-convert` call:
+
+```bash
+mkdir -p $TMPDIR/fonts $TMPDIR/fc
+curl -sL -o $TMPDIR/fonts/Archivo.ttf "https://github.com/google/fonts/raw/main/ofl/archivo/Archivo%5Bwdth%2Cwght%5D.ttf"
+printf '<?xml version="1.0"?><!DOCTYPE fontconfig SYSTEM "fonts.dtd"><fontconfig><include ignore_missing="yes">/etc/fonts/fonts.conf</include><dir>%s/fonts</dir><cachedir>%s/fc/cache</cachedir></fontconfig>\n' "$TMPDIR" "$TMPDIR" > $TMPDIR/fc/fonts.conf
+export FONTCONFIG_FILE=$TMPDIR/fc/fonts.conf
+fc-list | grep -qi archivo && echo "Archivo found"
+```
 - Personal Ledger posts use the Personal Ledger mockup style (the keyboard cover and the `keyboard-mockup` shortcode).
 - A `<title>` element describes the image.
 
