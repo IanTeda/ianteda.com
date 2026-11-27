@@ -21,7 +21,7 @@ draft: false
 toc: true
 cover:
   image: personal-ledger-viper-cover.png
-  caption: "Photo: Gaboon viper (Bitis gabonica) by TimVickers, Wikimedia Commons, public domain."
+  caption: "Photo: [Gaboon viper (*Bitis gabonica*)](https://commons.wikimedia.org/wiki/File:Bitis_gabonica_head.jpg) by TimVickers, Wikimedia Commons, public domain."
   alt: "A black and white photo of a Gaboon viper's head, turned towards the letters V, I, P, E and R, listing View, Interactor, Presenter, Entity and Router."
   style: full
 ---
@@ -97,4 +97,4 @@ Moving to this layout is still in progress. Each domain moves over in its own sl
 
 VIPER asks you to write more code up front in exchange for code that is easier to understand, test and change. For a long time that was a hard sell. With an AI assistant writing much of the boilerplate, the cost has dropped a lot, and the benefits have grown: small files keep the assistant’s context focused, clear boundaries keep its changes contained, and a consistent shape makes its work quick to review.
 
-If you are building something with an AI assistant and your files keep getting longer, it is worth a look. The code is on GitHub if you want to see how it hangs together.
+If you are building something with an AI assistant and your files keep getting longer, it is worth a look. The code is on [GitHub](https://github.com/IanTeda/Personal-Ledger) if you want to see how it hangs together.
