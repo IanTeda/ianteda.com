@@ -6,7 +6,7 @@
 </header>
 <main id="main" class="home">
   <article class="about">
-    {{ with .Params.cover }}<figure><img src="{{ .image }}" alt="{{ .caption }}">{{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end }}
+    {{ with .Params.cover }}<figure><img src="{{ .image }}" alt="{{ .caption | markdownify | plainify }}">{{ with .caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}</figure>{{ end }}
     {{ .Content }}
   </article>
   {{ with site.Params.social }}

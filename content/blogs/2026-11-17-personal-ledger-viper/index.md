@@ -21,7 +21,7 @@ draft: false
 toc: true
 cover:
   image: personal-ledger-viper-cover.png
-  caption: "Photo: Gaboon viper (Bitis gabonica) by TimVickers, Wikimedia Commons, public domain."
+  caption: "Photo: [Gaboon viper (*Bitis gabonica*)](https://commons.wikimedia.org/wiki/File:Bitis_gabonica_head.jpg) by TimVickers, Wikimedia Commons, public domain."
   alt: "A black and white photo of a Gaboon viper's head, turned towards the letters V, I, P, E and R, listing View, Interactor, Presenter, Entity and Router."
   style: full
 ---

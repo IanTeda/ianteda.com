@@ -16,7 +16,10 @@ The rules they share:
 - `font-family="Archivo, 'Liberation Sans', 'Helvetica Neue', Arial, sans-serif"`. Archivo is not installed system-wide: render with the real font (see Rendering with Archivo), not the Liberation Sans fallback. Check the PNG for text overflow.
 - Background `#f2f2f2` or `#fff`, ink `#1d1d1b`, greys `#5a5a5a` `#8a8a8a` `#c4c4c4`. At most one accent: the site's green `#1a7f37` (light-theme `--green` in `themes/proto/static/proto/site.css`), or red `#ee3a1c` to match the older diagrams.
 - Flat, editorial, monochrome: boxes, keys, arrows, a few words. No gradients, no shadows.
-- Photos only when Ian asks for one: greyscale, public domain or CC-licensed (Wikimedia Commons is a good source), embedded in the SVG as base64 so the file stands alone, and credited in the cover `caption` (photographer, source, licence) even when public domain.
+- Images (photos, scans, illustrations) are an option, and can be one of the three concepts. Rules:
+  - Licence: public domain or Creative Commons only, and the licence must allow reuse with modification (CC BY or CC BY-SA, not ND or NC). Wikimedia Commons is a good source: its API returns `LicenseShortName` and `Artist` in `extmetadata`.
+  - Reference: credit every image in the cover `caption`, even when public domain. Give the subject, a Markdown link to the source page, the author, the site and the licence: `Photo: [Gaboon viper (*Bitis gabonica*)](https://commons.wikimedia.org/wiki/File:Bitis_gabonica_head.jpg) by TimVickers, Wikimedia Commons, public domain.` Captions render Markdown. CC BY-SA images also need a link to the licence.
+  - Treatment: greyscale, so the accent stays the only colour, cropped or flipped to suit the layout. Embed it in the SVG as base64 so the file stands alone. Put downloads in their own directory under `$TMPDIR`.
 
 ## Rendering with Archivo
 
@@ -35,7 +38,7 @@ fc-list | grep -qi archivo && echo "Archivo found"
 ## Steps
 
 1. **Read the post.** Find the one idea a reader should see at a glance.
-2. **Draft three concepts**, each a different angle on that idea (for example: a diagram, a product mockup, a metaphor). Write them to `$TMPDIR/cover/a.svg`, `b.svg` and `c.svg`.
+2. **Draft three concepts**, each a different angle on that idea (for example: a diagram, a product mockup, a metaphor, a licensed photo). Write them to `$TMPDIR/cover/a.svg`, `b.svg` and `c.svg`.
 3. **Render a contact sheet.** One image read, not three:
 
    ```bash
