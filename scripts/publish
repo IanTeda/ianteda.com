@@ -62,7 +62,14 @@ echo "publish: deploy $run succeeded"
 
 if [[ -n "$bundle" ]]; then
   url=$(hugo list all 2>/dev/null | awk -F, -v p="$f" '$1==p {print $8}' | sed 's#://ianteda.com#://www.ianteda.com#')
-  code=$(curl -sL -o /dev/null -w '%{http_code}' "$url")
+  [[ -n "$url" ]] || die "could not work out the live URL for $f from hugo list"
+  # The CDN can lag the deploy, and a failed curl must not end the script silently under set -e.
+  code=000
+  for _ in $(seq 6); do
+    code=$(curl -sL -o /dev/null -w '%{http_code}' "$url" || true)
+    [[ "$code" == 200 ]] && break
+    sleep 5
+  done
   echo "publish: $url -> $code"
-  [[ "$code" == 200 ]]
+  [[ "$code" == 200 ]] || die "live URL did not return 200"
 fi
