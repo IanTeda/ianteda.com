@@ -1,43 +1,35 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Overview
-
-Hugo static site for www.ianteda.com (personal blog/notes), using the [Minimo](https://github.com/MunifTanjim/minimo) theme as a git submodule at `themes/minimo` (clone with `--recurse-submodules`). Deployed to GitHub Pages by `.github/workflows/build-and-deploy.yaml` on every push to `main`.
+Hugo static site for www.ianteda.com (personal blog/notes). Theme: `themes/proto`, in this repo; edit it directly.
 
 ## Commands
 
 ```bash
-hugo server --noHTTPCache --disableFastRender   # dev server
-hugo --gc --minify                              # production build (what CI runs) -> ./public
-npm ci && npx gulp                              # regenerate cover images
+scripts/check                 # hugo build + front-matter lint (pre-commit hook and CI run this)
+scripts/preview <slug>        # screenshots of a post at 1280 and 390 px, drafts included
+scripts/publish [<bundle>] --trailer "Co-Authored-By: ..."   # go live: see Branches
+hugo server --noHTTPCache --disableFastRender                 # dev server for Ian
 ```
 
-- Hugo extended 0.168.0 is pinned in `mise.toml`, the single source of truth: CI installs it from there via `jdx/mise-action`.
-- There are no tests or linters (`npm test` is a stub).
-- `gulp` (default task `coverImage`) resizes/crops every `src/cover-images/*.{jpg,png}` to 1200x562, compresses, and writes PNGs to `static/images/covers/`. Put source photos in `src/cover-images/` and reference the output as `/images/covers/cover-<name>.png`. Other `gulpfile.mjs` tasks are commented out.
+Hugo is pinned in `mise.toml`, which CI also reads. There are no tests.
 
-## Architecture
+## Branches
 
-- **Config** is split in `config/_default/` (`config.toml`, `params.toml`, `menu.toml`). Menu entries are *not* in `menu.toml` (it is commented out); they are set in each section's `_index.md` front matter.
-- **Content** (`content/`) is organised in sections: `blogs`, `notes`, `engineering-rule-book`, `letters-to-my-sons`, plus single pages (`now`, `contact`, `page/search.md`). Posts are page bundles: `content/<section>/YYYY-MM-DD-slug/index.md` with images/attachments alongside.
-- **Permalinks**: `[permalinks] page = "/:slug/"`, so the URL comes from the front matter `slug`, not the folder name. Set `slug` explicitly and use `aliases` when renaming.
-- **Taxonomies**: `categories`, `series`, `tags`. Series pages live in `content/series/<name>/_index.md` (e.g. the Engineering Rule Book rules belong to a series of that name).
-- **Overrides of the theme** live in the root `layouts/` (`partials/head/analytics.html`, `shortcodes/download.html`) and `static/`; never edit `themes/minimo`.
-- **Archetypes** (`archetypes/`): `default.md`, `blog.md`, `post.md`. The default archetype documents the full front-matter set, including the Minimo `cover:` block (`image`, `caption`, `style`). New content is created with `draft: true`.
-- Syntax highlighting uses Pygments-style code fences (`pygmentsCodefences`); the `figure` shortcode is used for images with links/attribution (see `README.md`).
+Work happens on `drafts`. A post goes live only when `drafts` is merged into `main`, whose push triggers the deploy (`.github/workflows/build-and-deploy.yaml`). `scripts/publish <bundle>` does the whole thing: sets `draft: false`, commits, merges into `main` without a checkout, pushes, waits for the deploy, and curls the live URL. Without a bundle it ships everything already committed on `drafts`. Hugo skips posts dated in the future.
 
-## Agent skills
+## Content
 
-### Issue tracker
+- Posts are page bundles: `content/<section>/YYYY-MM-DD-slug/index.md`, with their images alongside. New posts start from `archetypes/blog.md` with `draft: true`.
+- URLs are `/<section>/<slug>/`, taken from the front matter `slug`, not the folder name. Use `aliases` when renaming.
+- Taxonomies: `categories`, `series`, `tags`. Series pages live in `content/series/<name>/_index.md`.
+- Menu entries are set in each section's `_index.md` front matter.
 
-Issues are local markdown files under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+## Cover images
 
-### Domain docs
+Every new blog post gets a cover: three concepts for Ian to choose from, then refinement. Follow `docs/agents/cover-image.md`.
 
-Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+## Agent docs
 
-### Atlas (drafting posts)
-
-Atlas (`~/Projects/Atlas`) is Ian's private knowledge base. When asked to draft a post from what Atlas knows, follow `docs/agents/atlas.md`. Read Atlas only, never write to it, and never put private material into a post: this site and its repo are public.
+- Drafting a post from Ian's private knowledge base (Atlas): `docs/agents/atlas.md`. This repo is public, drafts included.
+- Issue tracker (local markdown in `.scratch/<feature>/`): `docs/agents/issue-tracker.md`.
+- Domain docs (`GLOSSARY.md`, `docs/adr/`): `docs/agents/domain.md`.

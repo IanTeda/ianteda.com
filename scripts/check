@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Build the site and lint content front matter. Run by .githooks/pre-commit and CI.
+# Fails if: the Hugo build errors, a page bundle has no `slug`, or a bundle's
+# relative `cover.image` is missing (the proto theme silently drops it).
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+export HUGO_CACHEDIR="${HUGO_CACHEDIR:-$PWD/.cache/hugo}"
+out="${TMPDIR:-/tmp}/ianteda-check"
+
+hugo --gc --minify --quiet -d "$out" >/dev/null || { echo "check: hugo build failed" >&2; exit 1; }
+
+fail=0
+for f in content/*/*/index.md; do
+  dir=$(dirname "$f")
+  fm=$(awk 'NR==1 && /^---/ {on=1; next} on && /^---/ {exit} on' "$f")
+  grep -qE '^slug:[[:space:]]*[^[:space:]]' <<<"$fm" || { echo "check: $f has no slug" >&2; fail=1; }
+  img=$(awk '/^cover:/ {c=1; next} c && /^[^[:space:]#]/ {c=0} c && /^[[:space:]]+image:/ {sub(/^[[:space:]]+image:[[:space:]]*/, ""); gsub(/["'\'']/, ""); print; exit}' <<<"$fm")
+  if [[ -n "$img" && "$img" != /* && ! -f "$dir/$img" ]]; then
+    echo "check: $f cover.image '$img' not found in $dir" >&2; fail=1
+  fi
+done
+[[ $fail -eq 0 ]] && echo "check: ok"
+exit $fail

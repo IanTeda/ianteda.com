@@ -20,9 +20,10 @@ tags:
 - tag_1
 - tag_2
 draft: true
-# Template specific - Minimo Theme
+# Cover image in this bundle: see docs/agents/cover-image.md
 cover:
-  image: /images/covers/cover-train-tracks.png
+  image: cover.png
   caption: "Cover Image - Caption"
+  alt: "Cover Image - Alt text"
   style: full
 ---
